@@ -1,7 +1,0 @@
-parameters:
-    app.exception_listener.class: App\EventListener\ExceptionListener
-
-services:
-    App\EventListener\ExceptionListener:
-        tags:
-            - { name: kernel.event_listener, event: kernel.exception, priority: 10 }

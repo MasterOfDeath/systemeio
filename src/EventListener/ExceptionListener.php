@@ -61,7 +61,7 @@ class ExceptionListener implements EventSubscriberInterface
 
         $this->logger->error($exception->getMessage());
 
-        $response = new JsonResponse(['errors' => $errors], $statusCode);
+        $response = new JsonResponse(['success' => false, 'errors' => $errors], $statusCode);
         $event->setResponse($response);
     }
 
