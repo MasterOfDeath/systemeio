@@ -1,0 +1,34 @@
+monolog:
+    channels: ['app']
+
+    handlers:
+        # Main log file (info and above)
+        main:
+            type: rotating_file
+            path: '%kernel.logs_dir%/%kernel.environment%.log'
+            level: info
+            max_files: 7
+            formatter: monolog.formatter.line
+            date_format: 'Y-m-d'
+            channels: ['!event', '!doctrine']
+
+        # Error log file (errors only)
+        error_file:
+            type: rotating_file
+            path: '%kernel.logs_dir%/errors-%kernel.environment%.log'
+            level: error
+            max_files: 7
+            formatter: monolog.formatter.line
+            date_format: 'Y-m-d'
+            include_stacktraces: true
+
+        # Console handler
+        console:
+            type: console
+            process_psr_3_messages: false
+
+        # Log errors to stderr (useful for Docker)
+        stderr:
+            type: stream
+            path: 'php://stderr'
+            level: error

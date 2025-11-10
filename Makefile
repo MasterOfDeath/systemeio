@@ -10,7 +10,7 @@ PHONY: help
 help: ## This help.
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-init: down build install up success-message console ## Initialize environment
+init: down build install up migrate fixtures success-message ## Initialize environment
 
 build: ## Build services.
 	${DC} build $(c)
@@ -34,6 +34,21 @@ console: ## Login in console.
 
 install: ## Install dependencies without running the whole application.
 	${DC_RUN} composer install
+
+migrate: ## Run database migrations.
+	${DC_RUN} php bin/console doctrine:migrations:migrate --no-interaction
+
+fixtures: ## Load fixtures
+	${DC_RUN} php bin/console doctrine:fixtures:load --no-interaction
+
+cs-fix: ## Run php-cs-fixer with default rules.
+	${DC_EXEC} php vendor/bin/php-cs-fixer fix
+
+phpstan: ## Run phpstan static analysis.
+	${DC_EXEC} php -d memory_limit=1G vendor/bin/phpstan analyse --memory-limit=1G
+
+test: ## Run tests
+	${DC_EXEC} ./bin/phpunit
 
 success-message:
 	@echo "You can now access the application at http://localhost:8337"

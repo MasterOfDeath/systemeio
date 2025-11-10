@@ -1,4 +1,4 @@
-### Calculate Price
+### Calculate Price - Germany with fixed coupon
 POST http://127.0.0.1:8337/calculate-price
 Accept: application/json
 Content-Type: application/json
@@ -9,7 +9,39 @@ Content-Type: application/json
   "couponCode": "D15"
 }
 
-### Execute Purchase
+### Calculate Price - Italy with percentage coupon
+POST http://127.0.0.1:8337/calculate-price
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 1,
+  "taxNumber": "IT12345678900",
+  "couponCode": "P10"
+}
+
+### Calculate Price - Greece without coupon
+POST http://127.0.0.1:8337/calculate-price
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 1,
+  "taxNumber": "GR123456789"
+}
+
+### Calculate Price - France
+POST http://127.0.0.1:8337/calculate-price
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 2,
+  "taxNumber": "FRAB123456789",
+  "couponCode": "P10"
+}
+
+### Execute Purchase - PayPal
 POST http://127.0.0.1:8337/purchase
 Accept: application/json
 Content-Type: application/json
@@ -19,4 +51,16 @@ Content-Type: application/json
   "taxNumber": "IT12345678900",
   "couponCode": "D15",
   "paymentProcessor": "paypal"
+}
+
+### Execute Purchase - Stripe
+POST http://127.0.0.1:8337/purchase
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 2,
+  "taxNumber": "DE123456789",
+  "couponCode": "P10",
+  "paymentProcessor": "stripe"
 }
