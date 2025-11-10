@@ -68,22 +68,6 @@ class Coupon
         return $this;
     }
 
-    public function getValueForCalculation(): string
-    {
-        return $this->isFixed()
-            ? (string) ($this->value)
-            : (string) ($this->value / 100);
-    }
-
-    public function setValueFromDecimal(string $value): self
-    {
-        $this->value = $this->isFixed()
-            ? (int) round((float) $value * 100)
-            : (int) round((float) $value * 100);
-
-        return $this;
-    }
-
     public function isFixed(): bool
     {
         return self::TYPE_FIXED === $this->type;

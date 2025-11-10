@@ -49,9 +49,4 @@ class Product
 
         return $this;
     }
-
-    public function getPriceInDecimal(): string
-    {
-        return number_format($this->price / 100, 2, '.', '');
-    }
 }
