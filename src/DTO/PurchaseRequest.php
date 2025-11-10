@@ -2,6 +2,7 @@
 
 namespace App\DTO;
 
+use App\Validator\Constraints as AppAssert;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class PurchaseRequest
@@ -11,12 +12,7 @@ class PurchaseRequest
     #[Assert\Positive(message: 'Product ID must be positive')]
     public ?int $product = null;
 
-    #[Assert\NotBlank(message: 'Tax number is required')]
-    #[Assert\Type(type: 'string', message: 'Tax number must be a string')]
-    #[Assert\Regex(
-        pattern: '/^(DE\d{9}|IT\d{11}|GR\d{9}|FR[A-Z]{2}\d{9})$/',
-        message: 'Invalid tax number format'
-    )]
+    #[AppAssert\TaxNumber]
     public ?string $taxNumber = null;
 
     #[Assert\Type(type: 'string', message: 'Coupon code must be a string')]
