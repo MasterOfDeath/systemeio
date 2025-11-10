@@ -1,14 +1,24 @@
+parameters:
+    app.tax_rates:
+        DE: 19  # Germany - 19%
+        IT: 22  # Italy - 22%
+        FR: 20  # France - 20%
+        GR: 24  # Greece - 24%
+
 services:
     _defaults:
         autowire: true
         autoconfigure: true
 
-    App\:
-        resource: '../src/'
-        exclude:
-            - '../src/DependencyInjection/'
-            - '../src/Entity/'
-            - '../src/Kernel.php'
+    App\Service\:
+        resource: '../src/Service/'
+
+    App\Service\TaxRateProvider:
+        arguments:
+            $taxRates: '%app.tax_rates%'
+
+    App\Repository\:
+        resource: '../src/Repository/'
 
     App\Controller\:
         resource: '../src/Controller/'

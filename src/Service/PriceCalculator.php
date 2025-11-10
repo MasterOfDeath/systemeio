@@ -8,22 +8,21 @@ use App\ValueObject\Money;
 
 class PriceCalculator
 {
-    private const TAX_RATES = [
-        'DE' => 19,  // Germany - 19%
-        'IT' => 22,  // Italy - 22%
-        'FR' => 20,  // France - 20%
-        'GR' => 24,  // Greece - 24%
-    ];
+    private TaxRateProvider $taxRateProvider;
+
+    public function __construct(TaxRateProvider $taxRateProvider)
+    {
+        $this->taxRateProvider = $taxRateProvider;
+    }
 
     public function calculate(Product $product, string $taxNumber, ?Coupon $coupon = null): Money
     {
         $priceInCents = $product->getPrice();
         $priceInCents = $this->applyCoupon($priceInCents, $coupon);
 
-        $countryCode = $this->extractCountryCode($taxNumber);
-        $taxRate = self::TAX_RATES[$countryCode] ?? 0;
-
-        $priceWithTax = (int) round($priceInCents * (1 + $taxRate / 100));
+        $taxRate = $this->taxRateProvider->getForTaxNumber($taxNumber);
+        $taxAmount = (int) round($priceInCents * ($taxRate->getRate() / 100));
+        $priceWithTax = $priceInCents + $taxAmount;
 
         return Money::fromCents($priceWithTax);
     }
@@ -48,10 +47,5 @@ class PriceCalculator
         }
 
         return $priceInCents;
-    }
-
-    public function extractCountryCode(string $taxNumber): string
-    {
-        return substr($taxNumber, 0, 2);
     }
 }

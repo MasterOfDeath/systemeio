@@ -5,6 +5,7 @@ namespace App\Tests\Unit\Service;
 use App\Entity\Coupon;
 use App\Entity\Product;
 use App\Service\PriceCalculator;
+use App\Service\TaxRateProvider;
 use App\ValueObject\Money;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -12,10 +13,18 @@ use PHPUnit\Framework\TestCase;
 class PriceCalculatorTest extends TestCase
 {
     private PriceCalculator $priceCalculator;
+    private TaxRateProvider $taxRateProvider;
 
     protected function setUp(): void
     {
-        $this->priceCalculator = new PriceCalculator();
+        $this->taxRateProvider = new TaxRateProvider([
+            'DE' => 19,
+            'IT' => 22,
+            'FR' => 20,
+            'GR' => 24,
+        ]);
+
+        $this->priceCalculator = new PriceCalculator($this->taxRateProvider);
     }
 
     public function testCalculateWithoutCoupon()
