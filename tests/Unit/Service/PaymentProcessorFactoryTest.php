@@ -13,7 +13,12 @@ class PaymentProcessorFactoryTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->factory = new PaymentProcessorFactory();
+        $paypalProcessor = $this->createMock(PaypalPaymentProcessorAdapter::class);
+        $stripeProcessor = $this->createMock(StripePaymentProcessorAdapter::class);
+
+        $processors = ['paypal' => $paypalProcessor, 'stripe' => $stripeProcessor];
+
+        $this->factory = new PaymentProcessorFactory($processors);
     }
 
     public function testCreateStripeProcessor()

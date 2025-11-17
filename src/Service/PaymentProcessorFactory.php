@@ -2,17 +2,26 @@
 
 namespace App\Service;
 
-use Systemeio\TestForCandidates\PaymentProcessor\PaypalPaymentProcessor;
-use Systemeio\TestForCandidates\PaymentProcessor\StripePaymentProcessor;
-
 class PaymentProcessorFactory
 {
-    public function create(string $processorName): PaymentProcessorInterface
+    /**
+     * @param iterable<string, PaymentProcessorInterface> $processors
+     */
+    public function __construct(
+        private iterable $processors,
+    ) {
+    }
+
+    public function create(string $name): PaymentProcessorInterface
     {
-        return match (strtolower($processorName)) {
-            'paypal' => new PaypalPaymentProcessorAdapter(new PaypalPaymentProcessor()),
-            'stripe' => new StripePaymentProcessorAdapter(new StripePaymentProcessor()),
-            default => throw new \InvalidArgumentException("Unknown payment processor: {$processorName}"),
-        };
+        $name = strtolower($name);
+
+        foreach ($this->processors as $key => $processor) {
+            if ($key === $name) {
+                return $processor;
+            }
+        }
+
+        throw new \InvalidArgumentException("Unknown payment processor: $name");
     }
 }
