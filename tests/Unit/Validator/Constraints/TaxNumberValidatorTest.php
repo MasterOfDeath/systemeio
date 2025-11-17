@@ -3,7 +3,7 @@
 namespace App\Tests\Unit\Validator\Constraints;
 
 use App\Validator\Constraints\TaxNumber;
-use App\Validator\Constraints\TaxNumberValidator;
+use App\Validator\TaxNumberValidator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

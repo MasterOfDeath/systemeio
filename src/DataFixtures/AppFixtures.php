@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Coupon;
 use App\Entity\Product;
+use App\Enum\CouponType;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -37,9 +38,9 @@ class AppFixtures extends Fixture
     private function loadCoupons(ObjectManager $manager): void
     {
         $coupons = [
-            ['code' => 'D15', 'type' => Coupon::TYPE_FIXED, 'value' => 1500],
-            ['code' => 'P10', 'type' => Coupon::TYPE_PERCENTAGE, 'value' => 10],
-            ['code' => 'P100', 'type' => Coupon::TYPE_PERCENTAGE, 'value' => 100],
+            ['code' => 'D15', 'type' => CouponType::FIXED, 'value' => 1500],
+            ['code' => 'P10', 'type' => CouponType::PERCENTAGE, 'value' => 10],
+            ['code' => 'P100', 'type' => CouponType::PERCENTAGE, 'value' => 100],
         ];
 
         foreach ($coupons as $data) {

@@ -15,6 +15,6 @@ class CalculatePriceRequest
     #[AppAssert\TaxNumber]
     public ?string $taxNumber = null;
 
-    #[Assert\Type(type: 'string', message: 'Coupon code must be a string')]
+    #[AppAssert\ValidCouponType]
     public ?string $couponCode = null;
 }

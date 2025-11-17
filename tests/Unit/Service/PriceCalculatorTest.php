@@ -4,6 +4,7 @@ namespace App\Tests\Unit\Service;
 
 use App\Entity\Coupon;
 use App\Entity\Product;
+use App\Enum\CouponType;
 use App\Service\PriceCalculator;
 use App\Service\TaxRateProvider;
 use App\ValueObject\Money;
@@ -103,7 +104,7 @@ class PriceCalculatorTest extends TestCase
     {
         $coupon = new Coupon();
         $coupon->setCode('TEST'.uniqid());
-        $coupon->setType($isFixed ? Coupon::TYPE_FIXED : Coupon::TYPE_PERCENTAGE);
+        $coupon->setType($isFixed ? CouponType::FIXED : CouponType::PERCENTAGE);
         $coupon->setValue($value);
 
         return $coupon;

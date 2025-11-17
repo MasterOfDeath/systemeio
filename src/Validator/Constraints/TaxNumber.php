@@ -2,6 +2,7 @@
 
 namespace App\Validator\Constraints;
 
+use App\Validator\TaxNumberValidator;
 use Symfony\Component\Validator\Constraint;
 
 #[\Attribute(\Attribute::TARGET_PROPERTY | \Attribute::IS_REPEATABLE)]

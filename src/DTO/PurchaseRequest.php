@@ -2,6 +2,7 @@
 
 namespace App\DTO;
 
+use App\Enum\PaymentProcessorType;
 use App\Validator\Constraints as AppAssert;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -15,11 +16,11 @@ class PurchaseRequest
     #[AppAssert\TaxNumber]
     public ?string $taxNumber = null;
 
-    #[Assert\Type(type: 'string', message: 'Coupon code must be a string')]
+    #[AppAssert\ValidCouponType]
     public ?string $couponCode = null;
 
     #[Assert\NotBlank(message: 'Payment processor is required')]
     #[Assert\Type(type: 'string', message: 'Payment processor must be a string')]
-    #[Assert\Choice(choices: ['paypal', 'stripe'], message: 'Payment processor must be either paypal or stripe')]
+    #[Assert\Choice(choices: [PaymentProcessorType::PAYPAL, PaymentProcessorType::STRIPE], message: 'Payment processor must be either paypal or stripe')]
     public ?string $paymentProcessor = null;
 }

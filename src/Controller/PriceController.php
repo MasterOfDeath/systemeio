@@ -68,14 +68,14 @@ class PriceController extends AbstractController
     {
         $product = $this->productRepository->find($productId);
         if (!$product) {
-            throw $this->createNotFoundException('Product not found');
+            throw $this->createNotFoundException('Product with id '.$productId.' not found');
         }
 
         $coupon = null;
         if ($couponCode) {
             $coupon = $this->couponRepository->findOneByCode($couponCode);
             if (!$coupon) {
-                throw $this->createNotFoundException('Coupon not found');
+                throw $this->createNotFoundException('Coupon with code '.$couponCode.' not found');
             }
         }
 

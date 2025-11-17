@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\CouponType;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -9,9 +10,6 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: 'coupons')]
 class Coupon
 {
-    public const TYPE_FIXED = 'fixed';
-    public const TYPE_PERCENTAGE = 'percentage';
-
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
     #[ORM\SequenceGenerator(sequenceName: 'coupons_id_seq', allocationSize: 1)]
@@ -70,11 +68,11 @@ class Coupon
 
     public function isFixed(): bool
     {
-        return self::TYPE_FIXED === $this->type;
+        return CouponType::FIXED === $this->type;
     }
 
     public function isPercentage(): bool
     {
-        return self::TYPE_PERCENTAGE === $this->type;
+        return CouponType::PERCENTAGE === $this->type;
     }
 }
