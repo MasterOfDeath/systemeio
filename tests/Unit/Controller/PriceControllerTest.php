@@ -150,7 +150,7 @@ class PriceControllerTest extends TestCase
         $controller->setContainer($container);
 
         $this->expectException(\Symfony\Component\HttpKernel\Exception\NotFoundHttpException::class);
-        $this->expectExceptionMessage('Product not found');
+        $this->expectExceptionMessage('Product with id 999 not found');
 
         $controller->calculatePrice($request);
     }
