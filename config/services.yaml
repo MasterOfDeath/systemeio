@@ -42,5 +42,8 @@ services:
     App\Validator\:
         resource: '../src/Validator/'
 
+    App\EventListener\:
+        resource: '../src/EventListener/'
+
     Systemeio\TestForCandidates\PaymentProcessor\PaypalPaymentProcessor: ~
     Systemeio\TestForCandidates\PaymentProcessor\StripePaymentProcessor: ~
